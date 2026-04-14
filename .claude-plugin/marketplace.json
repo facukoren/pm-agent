@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "pm-agent",
+  "description": "Senior Product Manager AI Agent. Discovery, PRD generation, RICE prioritization, and codebase validation.",
+  "owner": {
+    "name": "facukoren",
+    "url": "https://github.com/facukoren"
+  },
+  "plugins": [
+    {
+      "name": "pm-agent",
+      "description": "Full PM workflow: interview, codebase analysis, PRD with FR/NFR, RICE scoring, GitHub issue delivery.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
