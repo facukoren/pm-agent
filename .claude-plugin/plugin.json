@@ -1,0 +1,7 @@
+{
+  "name": "pm-agent",
+  "description": "Senior Product Manager AI Agent. Orchestrates discovery, PRD generation, RICE prioritization, and codebase validation in iterative phases.",
+  "author": {
+    "name": "facuk"
+  }
+}
