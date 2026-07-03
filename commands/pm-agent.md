@@ -1,0 +1,7 @@
+---
+description: Senior PM Agent — discovery, PRD, RICE prioritization, codebase validation, optional epic-by-epic implementation
+---
+
+Run the pm-agent skill (skills/pm-agent/SKILL.md) with this request: $ARGUMENTS
+
+If the request starts with `implement`, jump to Phase 6 (Implementation) — verify its preconditions first. Otherwise start from Phase 1.
