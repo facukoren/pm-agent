@@ -1,5 +1,5 @@
 ---
-name: pm-agent
+name: pm-workflow
 description: Senior Product Manager agent that turns a feature idea, problem description, or product request into a validated PRD — discovery interview, codebase analysis, FR/NFR with testable acceptance criteria, RICE prioritization — and can then implement it epic by epic with test-first, verified agent workflows. Works on existing codebases and greenfield (build an app from scratch in an empty repo). Use when the user invokes /pm-agent, asks to "write a PRD", "spec out a feature", "do product discovery", or wants an idea turned into requirements or a working application.
 ---
 
