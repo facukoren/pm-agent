@@ -1,2 +1,0 @@
-description = "Senior PM Agent — discovery, PRD, RICE prioritization, codebase validation"
-prompt = "Run the pm-agent skill. {{args}}"
