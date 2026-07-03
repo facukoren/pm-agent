@@ -1,7 +1,7 @@
 {
   "name": "pm-agent",
-  "version": "0.2.0",
-  "description": "Senior Product Manager AI Agent. Orchestrates discovery, PRD generation, RICE prioritization, codebase validation, and opt-in epic-by-epic implementation with test-first, adversarially verified agent workflows.",
+  "version": "0.3.0",
+  "description": "Senior Product Manager AI Agent. Orchestrates discovery, PRD generation, RICE prioritization, codebase validation, and opt-in epic-by-epic implementation with test-first, adversarially verified agent workflows. Supports existing codebases and greenfield builds.",
   "author": {
     "name": "facuk"
   }

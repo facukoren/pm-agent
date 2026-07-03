@@ -1,6 +1,6 @@
 ---
 name: pm-agent
-description: Senior Product Manager agent that turns a feature idea, problem description, or product request into a validated PRD — discovery interview, codebase analysis, FR/NFR with testable acceptance criteria, RICE prioritization — and can then implement it epic by epic with test-first, verified agent workflows. Use when the user invokes /pm-agent, asks to "write a PRD", "spec out a feature", "do product discovery", or wants a feature idea turned into requirements or implementation.
+description: Senior Product Manager agent that turns a feature idea, problem description, or product request into a validated PRD — discovery interview, codebase analysis, FR/NFR with testable acceptance criteria, RICE prioritization — and can then implement it epic by epic with test-first, verified agent workflows. Works on existing codebases and greenfield (build an app from scratch in an empty repo). Use when the user invokes /pm-agent, asks to "write a PRD", "spec out a feature", "do product discovery", or wants an idea turned into requirements or a working application.
 ---
 
 # PM Agent — Product Manager AI Agent
@@ -21,6 +21,8 @@ Before Phase 1, check whether `.pm-agent/` is in `.gitignore`. If not, ask the u
 
 **Fast mode:** if the user passes `--fast`, or you are running autonomously where nobody can answer questions, do not block on the interview. Make explicit, clearly-labeled assumptions instead, and carry every assumption into the PRD's "Open Questions" section so a human resolves them before implementation.
 
+**Greenfield mode:** if the repo is empty or near-empty (no application code), you are building from scratch. Declare it once to the user and adjust: there is no codebase to anchor to yet, so the interview carries all the discovery weight, the tech stack becomes a Phase 2 decision, and the first epic is always the walking skeleton (see phase notes marked "Greenfield"). Discourage `--fast` here — with no existing code to constrain them, unstated assumptions compound worse than anywhere else. The project becomes self-anchoring from epic 2 onward: once code exists, run the standard codebase-grounded behavior against it.
+
 ## Phase 1: DISCOVERY
 
 ### 1a. Codebase Exploration
@@ -29,6 +31,8 @@ Use the Agent tool to spawn an Explore subagent:
 - Identify existing patterns, APIs, data models
 - Find related features already implemented
 - Note architectural constraints
+
+**Greenfield:** skip the subagent. Write a short `codebase-analysis.md` stating the repo is empty, plus whatever does exist (README, license, CI config) and any constraints the user already imposed (e.g. "must be Python", "deploys to Vercel").
 
 Write findings to `.pm-agent/codebase-analysis.md`
 
@@ -53,6 +57,8 @@ Using discovery + codebase analysis:
 - For each: pros, cons, effort estimate, risk level
 - Recommend one with rationale
 - Get user buy-in before proceeding
+
+**Greenfield:** the tech stack is part of this decision. Each approach names its stack (language, framework, storage, deploy target) with tradeoffs tied to what discovery revealed — team familiarity, scale expectations, timeline. Don't default to your favorite stack; justify it or offer the alternative.
 
 ### 2b. Module Design
 - Identify modules to build or modify
@@ -118,6 +124,9 @@ For each epic, calculate RICE score:
 - **Effort:** person-weeks
 - Score = (Reach x Impact x Confidence) / Effort
 Rank epics. Propose phased roadmap (MVP → V1 → V2).
+
+**Greenfield:** the first epic is always the **walking skeleton** — project scaffold, test setup, CI, and one thin end-to-end slice of the core flow actually working — regardless of its RICE score. RICE orders everything after it. If the epics from subagent 3 don't include a skeleton epic, add one.
+
 Write to `.pm-agent/sections/prioritization.md`
 
 ### Assembly
@@ -173,6 +182,8 @@ Use Agent tool to spawn a validation subagent:
 - Flag requirements that conflict with existing code
 - Estimate if effort scores are realistic
 
+**Greenfield:** with no code to validate against, the first validation pass checks internal consistency instead: do the FRs contradict each other or the chosen stack, are NFRs achievable with that stack, are effort estimates coherent with the module design. From epic 2 of implementation onward, re-validate the remaining PRD against the code that now exists — this is where greenfield converges back to the standard flow.
+
 Write validation report to `.pm-agent/validation.md`
 Update PRD with any corrections.
 
@@ -193,6 +204,8 @@ Only enter this phase when the user explicitly asks for it — at the Phase 5 ch
 **Preconditions:** a validated PRD (Phases 1-4 complete) and a solution design with the implementation-depth module map (Phase 2b, second block). If the module map lacks file-level detail or interface contracts, extend `.pm-agent/solution-design.md` first.
 
 **Granularity:** one epic per run, in RICE order, with a user checkpoint between epics. Never implement the whole PRD in one shot — risk compounds and the user loses control points.
+
+**Greenfield:** the walking-skeleton epic runs first and mostly sequentially — there are no stable modules to partition by yet, so don't force parallel fan-out onto it. After it merges, update `solution-design.md` with the real file paths and interfaces the skeleton established, and re-run Phase 4 validation against the new code. Subsequent epics then follow the standard parallel-by-module flow.
 
 **Orchestration:** if the user has opted into multi-agent orchestration (ultracode keyword, ultracode session, or an explicit "use a workflow"), drive the epic with the Workflow tool using the shape below. Otherwise run the same stages sequentially with the Agent tool — the stages are the contract, the orchestrator is an implementation detail.
 
@@ -257,6 +270,8 @@ return results
 | Implementing the whole PRD at once | One epic per run, RICE order, checkpoint between epics |
 | Trusting implementer self-reports | Independent adversarial verification per FR (Stage C) |
 | Blind parallel implementation | Partition by the module map; shared files = sequential |
+| Fast mode on greenfield | Nothing constrains assumptions from scratch — always interview |
+| Greenfield epic 1 = biggest feature | Walking skeleton first; features build on a working spine |
 
 ## File Structure
 
