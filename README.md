@@ -6,9 +6,17 @@ It behaves like a senior Product Manager: it interviews you before writing anyth
 
 ## Install
 
+As a Claude Code plugin (recommended — gives you the `/pm-agent` command):
+
 ```
 /plugin marketplace add facukoren/pm-agent
 /plugin install pm-agent@pm-agent
+```
+
+Or as a portable skill via the universal [`skills`](https://www.skills.sh) installer (works across Claude Code, Codex, Cline, and other agents):
+
+```
+npx skills add facukoren/pm-agent
 ```
 
 ## Usage
